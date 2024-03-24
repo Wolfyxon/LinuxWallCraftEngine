@@ -41,6 +41,11 @@ python3 main.py -t gif -p /path/to/your/animated.gif -o xfce
 * Make sure you have the necessary dependencies installed (Python 3, FFmpeg, ImageMagick).
 * Performance may vary depending on the desktop environment and system configuration.
 
+## Demo
+
+https://github.com/Gmm09x/LinuxWallCraftEngine/blob/main/src/doc/demos/Demo.mp4
+
+
 ## Idea Come From
 [Wolfyxon](https://github.com/Wolfyxon/xfce-live-wallpaper?tab=readme-ov-file)
 
