@@ -9,11 +9,10 @@ To install and set up the Live Wallpaper-Engine for Linux, follow these steps:
 
 1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/Gmm09x/Wallpaper-Engine.git
-   cd Wallpaper-Engine
-   sudo bash setup.sh
-   
+ ```bash
+git clone https://github.com/Gmm09x/Wallpaper-Engine.git
+cd Wallpaper-Engine
+sudo bash setup.sh   
 ```	
 
 ## Usage
