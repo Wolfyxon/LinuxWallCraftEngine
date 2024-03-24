@@ -43,7 +43,10 @@ python3 main.py -t gif -p /path/to/your/animated.gif -o xfce
 
 ## Demo
 
-![]https://github.com/Gmm09x/LinuxWallCraftEngine/blob/main/src/doc/demos/Demo.gif
+<p>
+<img src="https://github.com/Gmm09x/LinuxWallCraftEngine/blob/main/src/doc/demos/Demo.gif?raw=true">
+</p>
+
 
 
 ## Idea Come From
