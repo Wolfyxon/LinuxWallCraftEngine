@@ -37,7 +37,7 @@ def welcome_print():
     print(formatting["ENDC"])
 
 def clear_cache():
-    print("Clearing cache...")
+    print("[+]Clearing cache...")
     shutil.rmtree('./src/cache', ignore_errors=True)
     os.mkdir("./src/cache")
 
@@ -71,11 +71,11 @@ def main():
     background = args.background
 
     if wallpaper_type == "cache":
-        print("Using last cached animation")
+        print("[+] Using last cached animation")
         if background:
             run_wallpaper_from_cache(wait_time)
         else:
-            print("Running in foreground. Use -b or --background option to run in background.")
+            print("[+] Running in foreground. Use -b or --background option to run in background.")
             run_wallpaper_from_cache(wait_time)
         return
 
@@ -87,34 +87,34 @@ def main():
         print(formatting["FAIL"] + "Path does not exist:", path)
         return
 
-    print("Killing other wallpaper instances...")
+    print("[+] Killing other wallpaper instances...")
     subprocess.Popen(["nohup", f"{Path(__file__).parent}/src/modules/kill.sh"])
 
     if wallpaper_type == "sequence":
-        print("Animating image sequence in", path)
+        print("[+] Animating image sequence in", path)
         if background:
             subprocess.Popen(["python3", f"{Path(__file__).parent}/src/modules/wallpaper.py", path, str(wait_time)])
         else:
-            print("Running in foreground. Use -b or --background option to run in background.")
+            print("[+] Running in foreground. Use -b or --background option to run in background.")
             os.system(f"python {Path(__file__).parent}/src/modules/wallpaper.py {path} {wait_time}")
     elif wallpaper_type == "gif":
         clear_cache()
-        print("Converting GIF to image sequence, please wait...")
+        print("[+] Converting GIF to image sequence, please wait...")
         if background:
             subprocess.Popen(["convert", path, "-coalesce", "./src/cache/frame.png"])
             run_wallpaper_from_cache(wait_time)
         else:
-            print("Running in foreground. Use -b or --background option to run in background.")
+            print("[+] Running in foreground. Use -b or --background option to run in background.")
             os.system(f"convert {path} -coalesce ./src/cache/frame.png")
             run_wallpaper_from_cache(wait_time)
     elif wallpaper_type == "video":
         clear_cache()
-        print("Converting video file to image sequence, please wait...")
+        print("[+] Converting video file to image sequence, please wait...")
         if background:
             subprocess.Popen(["ffmpeg", "-i", path, "-vf", "fps=30", "-vf", "scale=1280:720", "./src/cache/frame-%d.png"])
             run_wallpaper_from_cache(wait_time)
         else:
-            print("Running in foreground. Use -b or --background option to run in background.")
+            print("[+] Running in foreground. Use -b or --background option to run in background.")
             os.system(f"ffmpeg -i {path} -vf fps=30 -vf scale=1280:720 ./src/cache/frame-%d.png")
             run_wallpaper_from_cache(wait_time)
 
@@ -122,4 +122,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-print("\nExiting")
+print("\n[+] Exiting")

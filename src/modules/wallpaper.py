@@ -21,10 +21,10 @@ wait_time = float(sys.argv[2])  # Time interval between changing wallpapers
 sequence_files = next(os.walk(path), (None, None, []))[2]
 
 # Display information about the image sequence
-print("[+]Listing frames in " + path)
-print("[+]Running image sequence from: " + path)
-print("[+]Frames:\n" + str(sequence_files) + "\nTotal: " + str(len(sequence_files)))
-print("Animating")
+print("[+] Listing frames in " + path)
+print("[+] Running image sequence from: " + path)
+print("[+] Frames:\n" + str(sequence_files) + "\nTotal: " + str(len(sequence_files)))
+print("[+] Animating")
 
 # Loop to set each image as wallpaper with specified time interval
 while True:
