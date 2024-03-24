@@ -20,9 +20,9 @@ formatting = {
 
 def welcome_print():
     print("")
-    print(formatting["BOLD"] + "Live wallpaper script for Linux")
+    print(formatting["BOLD"] + "Live wallpaper Engine for Linux")
     print(formatting["FAIL"] + "by Gmm09x")
-    print(formatting["ENDC"] + "usage: main.py [-h] [-t {gif,video,cache}] [-p PATH] [-w WAIT_TIME] [-o {xfce,i3wm,kde}]")
+    print(formatting["ENDC"] + "usage: main.py [-h] [-t {gif,video,cache}] [-p PATH] [-w WAIT_TIME] [-o {xfce,i3wm,kde}] [-b]")
     print("Options:")
     print("  -h, --help            show this help message and exit")
     print("  -t {gif,video,cache}, --type {gif,video,cache}")
@@ -32,6 +32,7 @@ def welcome_print():
     print("                        Wait time between frames for image sequence wallpapers (default is 0.05s)")
     print("  -o {xfce,i3wm,kde}, --os {xfce,i3wm,kde}")
     print("                        Target operating system (XFCE, i3wm, KDE)")
+    print("  -b, --background      Run wallpaper operations in the background")
     print(formatting["WARNING"] + "IMPORTANT NOTE: path must be global, Example: /home/you/Videos/video.mp4 NOT: ./video.mp4. Make sure you have imagemagik installed")
     print(formatting["ENDC"])
 
@@ -60,16 +61,22 @@ def main():
     parser.add_argument("-p", "--path", help="Path to the file or directory containing the wallpaper")
     parser.add_argument("-w", "--wait-time", type=float, default=0.05, help="Wait time between frames for image sequence wallpapers (default is 0.05s)")
     parser.add_argument("-o", "--os", choices=["xfce", "i3wm", "kde"], default="xfce", help="Target operating system (XFCE, i3wm, KDE)")
+    parser.add_argument("-b", "--background", action="store_true", help="Run wallpaper operations in the background")
     args = parser.parse_args()
 
     wallpaper_type = args.type
     path = args.path
     wait_time = args.wait_time
     target_os = args.os
+    background = args.background
 
     if wallpaper_type == "cache":
         print("Using last cached animation")
-        run_wallpaper_from_cache(wait_time)
+        if background:
+            run_wallpaper_from_cache(wait_time)
+        else:
+            print("Running in foreground. Use -b or --background option to run in background.")
+            run_wallpaper_from_cache(wait_time)
         return
 
     if not path:
@@ -85,17 +92,31 @@ def main():
 
     if wallpaper_type == "sequence":
         print("Animating image sequence in", path)
-        os.system(f"python {Path(__file__).parent}/src/modules/wallpaper.py {path} {wait_time}")
+        if background:
+            subprocess.Popen(["python", f"{Path(__file__).parent}/src/modules/wallpaper.py", path, str(wait_time)])
+        else:
+            print("Running in foreground. Use -b or --background option to run in background.")
+            os.system(f"python {Path(__file__).parent}/src/modules/wallpaper.py {path} {wait_time}")
     elif wallpaper_type == "gif":
         clear_cache()
         print("Converting GIF to image sequence, please wait...")
-        os.system(f"convert {path} -coalesce ./src/cache/frame.png")
-        run_wallpaper_from_cache(wait_time)
+        if background:
+            subprocess.Popen(["convert", path, "-coalesce", "./src/cache/frame.png"])
+            run_wallpaper_from_cache(wait_time)
+        else:
+            print("Running in foreground. Use -b or --background option to run in background.")
+            os.system(f"convert {path} -coalesce ./src/cache/frame.png")
+            run_wallpaper_from_cache(wait_time)
     elif wallpaper_type == "video":
         clear_cache()
         print("Converting video file to image sequence, please wait...")
-        os.system(f"ffmpeg -i {path} -vf fps=30 -vf scale=1280:720 ./src/cache/frame-%d.png")
-        run_wallpaper_from_cache(wait_time)
+        if background:
+            subprocess.Popen(["ffmpeg", "-i", path, "-vf", "fps=30", "-vf", "scale=1280:720", "./src/cache/frame-%d.png"])
+            run_wallpaper_from_cache(wait_time)
+        else:
+            print("Running in foreground. Use -b or --background option to run in background.")
+            os.system(f"ffmpeg -i {path} -vf fps=30 -vf scale=1280:720 ./src/cache/frame-%d.png")
+            run_wallpaper_from_cache(wait_time)
 
 # Execute the main function
 if __name__ == "__main__":
