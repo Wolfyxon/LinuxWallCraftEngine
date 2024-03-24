@@ -42,7 +42,7 @@ def clear_cache():
     os.mkdir("./src/cache")
 
 def run_wallpaper_from_cache(wait_time):
-    os.system(f"python {Path(__file__).parent}/src/modules/wallpaper.py {Path(__file__).parent}/src/cache {wait_time}")
+    os.system(f"python3 {Path(__file__).parent}/src/modules/wallpaper.py {Path(__file__).parent}/src/cache {wait_time}")
 
 def check_root():
     if os.geteuid() != 0:
@@ -93,7 +93,7 @@ def main():
     if wallpaper_type == "sequence":
         print("Animating image sequence in", path)
         if background:
-            subprocess.Popen(["python", f"{Path(__file__).parent}/src/modules/wallpaper.py", path, str(wait_time)])
+            subprocess.Popen(["python3", f"{Path(__file__).parent}/src/modules/wallpaper.py", path, str(wait_time)])
         else:
             print("Running in foreground. Use -b or --background option to run in background.")
             os.system(f"python {Path(__file__).parent}/src/modules/wallpaper.py {path} {wait_time}")
