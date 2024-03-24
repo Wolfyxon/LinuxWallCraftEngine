@@ -5,14 +5,15 @@ It's a fun and creative way to personalize your desktop and make it uniquely you
 
 ## Installation
 
-To install and set up the Live Wallpaper-Engine for Linux, follow these steps:
+To install and set up the Live LinuxWallCraftEngine for Linux, follow these steps:
 
 1. Clone the repository:
 
  ```bash
-git clone https://github.com/Gmm09x/Wallpaper-Engine.git
-cd Wallpaper-Engine
-sudo bash setup.sh   
+git clone https://github.com/Gmm09x/LinuxWallCraftEngine.git
+cd LinuxWallCraftEngine
+sudo bash setup.sh
+sudo python3 main.py -h   
 ```	
 
 ## Usage
