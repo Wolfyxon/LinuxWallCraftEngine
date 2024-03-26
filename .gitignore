@@ -1,0 +1,7 @@
+# IDEs and code editors
+.idea/
+.vscode/
+
+# Temporary files
+*.pyc
+nohup.out
