@@ -5,3 +5,7 @@
 # Temporary files
 *.pyc
 nohup.out
+
+# Cache dirs
+cache/
+__pycache_/
